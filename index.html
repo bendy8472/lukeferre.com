@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luke Ferre</title>
+  <meta name="description" content="Luke Ferre — photos and contact.">
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --line: #e4e4e0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+    header, footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 16px 32px;
+      text-align: center;
+    }
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.25rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .contact {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 24px;
+      font-size: 1.05rem;
+    }
+    .contact a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+    }
+    .contact a:hover { border-color: var(--text); }
+
+    /* Photo grid */
+    .photos {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+      columns: 3 280px;
+      column-gap: 12px;
+    }
+    .photos img {
+      width: 100%;
+      display: block;
+      margin-bottom: 12px;
+      border-radius: 4px;
+      break-inside: avoid;
+    }
+
+    footer {
+      padding-top: 40px;
+      padding-bottom: 48px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Luke Ferre</h1>
+    <div class="contact">
+      <a href="tel:+16236986677">623-698-6677</a>
+      <a href="mailto:ferre.luke1@gmail.com">ferre.luke1@gmail.com</a>
+      <a href="https://instagram.com/luke_ferre" target="_blank" rel="noopener">@luke_ferre</a>
+    </div>
+  </header>
+
+  <!-- Drop images into the photos/ folder and list them here -->
+  <main class="photos">
+    <img src="photos/1.jpg" alt="Luke Ferre" onerror="this.remove()">
+    <img src="photos/2.jpg" alt="Luke Ferre" onerror="this.remove()">
+    <img src="photos/3.jpg" alt="Luke Ferre" onerror="this.remove()">
+    <img src="photos/4.jpg" alt="Luke Ferre" onerror="this.remove()">
+    <img src="photos/5.jpg" alt="Luke Ferre" onerror="this.remove()">
+    <img src="photos/6.jpg" alt="Luke Ferre" onerror="this.remove()">
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Luke Ferre
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
