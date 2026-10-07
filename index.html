@@ -5,93 +5,352 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Luke Ferre</title>
   <meta name="description" content="Luke Ferre — photos and contact.">
+  <meta property="og:title" content="Luke Ferre">
+  <meta property="og:image" content="https://lukeferre.com/photos/1.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fafaf8;
-      --text: #1a1a1a;
-      --muted: #6b6b6b;
-      --line: #e4e4e0;
+      --bg: #0e0e0e;
+      --surface: #171717;
+      --text: #f4f1ea;
+      --muted: #a29e96;
+      --line: rgba(244, 241, 234, 0.14);
+      --accent: #d9b77e;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-family: "Inter", system-ui, sans-serif;
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
-    header, footer {
-      max-width: 1100px;
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: radial-gradient(120% 80% at 70% 10%, #2a2520 0%, var(--bg) 60%);
+    }
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      animation: settle 1.6s ease-out both;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--bg) 0%, rgba(14,14,14,0.55) 35%, rgba(14,14,14,0) 70%);
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 48px 16px 32px;
-      text-align: center;
+      padding: 0 24px 72px;
+      animation: rise 1s 0.3s ease-out both;
+    }
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
     }
     h1 {
-      font-size: clamp(2rem, 6vw, 3.25rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(3.5rem, 13vw, 9rem);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
     }
     .contact {
-      margin-top: 12px;
+      margin-top: 32px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px 24px;
-      font-size: 1.05rem;
+      gap: 12px;
     }
-    .contact a {
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(14, 14, 14, 0.45);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       color: var(--text);
       text-decoration: none;
-      border-bottom: 1px solid var(--line);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
-    .contact a:hover { border-color: var(--text); }
+    .pill:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      transform: translateY(-2px);
+    }
+    .pill svg { width: 18px; height: 18px; flex: none; }
+    .scroll-cue {
+      position: absolute;
+      z-index: 1;
+      right: 24px;
+      bottom: 72px;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      text-decoration: none;
+    }
 
-    /* Photo grid */
-    .photos {
-      max-width: 1100px;
+    /* ---------- Gallery ---------- */
+    .gallery {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 16px;
-      columns: 3 280px;
-      column-gap: 12px;
+      padding: 96px 24px 48px;
     }
-    .photos img {
+    .gallery-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+    }
+    .count { color: var(--muted); font-size: 0.9rem; }
+    .grid {
+      columns: 3 300px;
+      column-gap: 16px;
+    }
+    .grid button {
+      display: block;
+      width: 100%;
+      margin-bottom: 16px;
+      padding: 0;
+      border: 0;
+      background: var(--surface);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: zoom-in;
+      break-inside: avoid;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .grid button.in { opacity: 1; transform: none; }
+    .grid img {
       width: 100%;
       display: block;
-      margin-bottom: 12px;
-      border-radius: 4px;
-      break-inside: avoid;
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+    .grid button:hover img { transform: scale(1.04); filter: brightness(1.08); }
+    .empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 64px 0;
+      border: 1px dashed var(--line);
+      border-radius: 6px;
     }
 
+    /* ---------- Lightbox ---------- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(8, 8, 8, 0.94);
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 4px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+    .lb-btn {
+      position: absolute;
+      background: none;
+      border: 0;
+      color: var(--text);
+      font-size: 2rem;
+      line-height: 1;
+      padding: 16px;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+    .lb-btn:hover { opacity: 1; }
+    .lb-close { top: 8px; right: 8px; }
+    .lb-prev { left: 4px; top: 50%; transform: translateY(-50%); }
+    .lb-next { right: 4px; top: 50%; transform: translateY(-50%); }
+
+    /* ---------- Footer ---------- */
     footer {
-      padding-top: 40px;
-      padding-bottom: 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
       color: var(--muted);
       font-size: 0.9rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+    footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+    @keyframes settle { from { transform: scale(1.08); opacity: 0; } to { transform: none; opacity: 1; } }
+    @keyframes rise { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .grid button { opacity: 1; transform: none; }
+    }
+    @media (max-width: 600px) {
+      .hero-inner { padding-bottom: 48px; }
+      .scroll-cue { display: none; }
+      .pill { padding: 10px 16px; font-size: 0.9rem; }
+      .gallery { padding-top: 64px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Luke Ferre</h1>
-    <div class="contact">
-      <a href="tel:+16236986677">623-698-6677</a>
-      <a href="mailto:ferre.luke1@gmail.com">ferre.luke1@gmail.com</a>
-      <a href="https://instagram.com/luke_ferre" target="_blank" rel="noopener">@luke_ferre</a>
+  <header class="hero">
+    <img id="hero-img" src="photos/1.jpg" alt="Luke Ferre" onerror="this.remove()">
+    <div class="hero-inner">
+      <p class="eyebrow">Photos &amp; Contact</p>
+      <h1>Luke<br>Ferre</h1>
+      <div class="contact">
+        <a class="pill" href="tel:+16236986677">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+          623-698-6677
+        </a>
+        <a class="pill" href="mailto:ferre.luke1@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+          ferre.luke1@gmail.com
+        </a>
+        <a class="pill" href="https://instagram.com/luke_ferre" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+          @luke_ferre
+        </a>
+      </div>
     </div>
+    <a class="scroll-cue" href="#photos">Scroll ↓</a>
   </header>
 
-  <!-- Drop images into the photos/ folder and list them here -->
-  <main class="photos">
-    <img src="photos/1.jpg" alt="Luke Ferre" onerror="this.remove()">
-    <img src="photos/2.jpg" alt="Luke Ferre" onerror="this.remove()">
-    <img src="photos/3.jpg" alt="Luke Ferre" onerror="this.remove()">
-    <img src="photos/4.jpg" alt="Luke Ferre" onerror="this.remove()">
-    <img src="photos/5.jpg" alt="Luke Ferre" onerror="this.remove()">
-    <img src="photos/6.jpg" alt="Luke Ferre" onerror="this.remove()">
+  <main class="gallery" id="photos">
+    <div class="gallery-head">
+      <h2>Photos</h2>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="grid" id="grid"></div>
   </main>
 
   <footer>
-    &copy; <span id="year"></span> Luke Ferre
+    <span>&copy; <span id="year"></span> Luke Ferre</span>
+    <nav>
+      <a href="tel:+16236986677">Call</a>
+      <a href="mailto:ferre.luke1@gmail.com">Email</a>
+      <a href="https://instagram.com/luke_ferre" target="_blank" rel="noopener">Instagram</a>
+    </nav>
   </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Photo viewer">
+    <button class="lb-btn lb-close" aria-label="Close">&times;</button>
+    <button class="lb-btn lb-prev" aria-label="Previous">&#8249;</button>
+    <img id="lb-img" alt="Luke Ferre">
+    <button class="lb-btn lb-next" aria-label="Next">&#8250;</button>
+  </div>
+
+  <script>
+    // Add photos here — files live in the photos/ folder.
+    const PHOTOS = [
+      "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg",
+      "7.jpg", "8.jpg", "9.jpg", "10.jpg", "11.jpg", "12.jpg"
+    ];
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const grid = document.getElementById("grid");
+    const loaded = [];
+
+    // Load each photo; only show the ones that exist, in list order.
+    Promise.all(PHOTOS.map(name => new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => resolve(null);
+      img.src = "photos/" + name;
+      img.alt = "Luke Ferre";
+      img.loading = "lazy";
+    }))).then(imgs => {
+      imgs.filter(Boolean).forEach(img => {
+        const i = loaded.push(img.src) - 1;
+        const btn = document.createElement("button");
+        btn.setAttribute("aria-label", "Open photo " + (i + 1));
+        btn.appendChild(img);
+        btn.addEventListener("click", () => openLightbox(i));
+        grid.appendChild(btn);
+      });
+      document.getElementById("count").textContent = loaded.length ? loaded.length + " photos" : "";
+      if (!loaded.length) {
+        grid.outerHTML = '<p class="empty">Photos coming soon.</p>';
+        return;
+      }
+      const io = new IntersectionObserver(entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      }), { threshold: 0.1 });
+      grid.querySelectorAll("button").forEach(b => io.observe(b));
+    });
+
+    // Lightbox
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lb-img");
+    let current = 0;
+    function openLightbox(i) { current = i; lbImg.src = loaded[i]; lb.classList.add("open"); document.body.style.overflow = "hidden"; }
+    function closeLightbox() { lb.classList.remove("open"); document.body.style.overflow = ""; }
+    function step(d) { current = (current + d + loaded.length) % loaded.length; lbImg.src = loaded[current]; }
+    lb.querySelector(".lb-close").onclick = closeLightbox;
+    lb.querySelector(".lb-prev").onclick = e => { e.stopPropagation(); step(-1); };
+    lb.querySelector(".lb-next").onclick = e => { e.stopPropagation(); step(1); };
+    lb.addEventListener("click", e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener("keydown", e => {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "ArrowRight") step(1);
+    });
+    // Swipe on phones
+    let x0 = null;
+    lb.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener("touchend", e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+      x0 = null;
+    });
+  </script>
 </body>
 </html>
